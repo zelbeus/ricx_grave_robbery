@@ -1,6 +1,6 @@
 Config = {}
 
-Config.framework = "redemrp" --"redemrp" or "vorp"
+Config.framework = "redemrp" --"redemrp" or "vorp" or "qbr"
 
 Config.PrayAnim =  {
     {"amb_misc@world_human_pray_rosary@base", "base"},
