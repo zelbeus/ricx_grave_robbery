@@ -227,5 +227,7 @@ AddEventHandler('Notification:left_grave_robbery', function(t1, t2, dict, txtr, 
         SetStreamedTextureDictAsNoLongerNeeded(_dict)
     elseif Config.framework == "vorp" then
         TriggerEvent("vorp:TipBottom", t1.."\n"..t2, timer) 
+    elseif Config.framework == "qbr" then
+        TriggerEvent('QBCore:Notify', 9, t1.."\n"..t2, timer, 0, dict, txtr, 'COLOR_WHITE')
     end
 end)
