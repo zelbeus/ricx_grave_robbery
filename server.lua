@@ -1,6 +1,7 @@
 data = {}
 local VorpCore
 local VorpInv
+local QBRItems
 
 if Config.framework == "redemrp" then
     TriggerEvent("redemrp_inventory:getData",function(call)
@@ -12,6 +13,8 @@ elseif Config.framework == "vorp" then
     end)
     
     VorpInv = exports.vorp_inventory:vorp_inventoryApi()
+elseif Config.framework == "qbr" then 
+    QBRItems = exports['qbr-core']:GetItems()
 end
 
 local TEXTS = Config.Texts
@@ -34,6 +37,12 @@ AddEventHandler("ricx_grave_robbery:check_shovel", function(id)
         end
     elseif Config.framework == "vorp" then
         count = VorpInv.getItemCount(_source, Config.ShovelItem)
+    elseif Config.framework == "qbr" then 
+        local User = exports['qbr-core']:GetPlayer(_source)
+        local hasItem = User.Functions.GetItemByName(Config.ShovelItem)
+        if hasItem and hasItem.amount > 0 then 
+            count = hasItem.amount
+        end
     end
     if count and count > 0 then
         TriggerClientEvent("ricx_grave_robbery:start_dig", _source, id)
@@ -59,6 +68,9 @@ AddEventHandler("ricx_grave_robbery:reward", function(id)
         itemD.AddItem(1)
     elseif Config.framework == "vorp" then
         VorpInv.addItem(_source, item, 1)
+    elseif Config.framework == "qbr" then
+        local User = exports['qbr-core']:GetPlayer(_source)
+        User.Functions.AddItem(item, 1)
     end
     TriggerClientEvent("Notification:left_grave_robbery", _source, TEXTS.GraveRobbery, TEXTS.FoundItem.."\n+ "..label, TEXTURES.alert[1], TEXTURES.alert[2], 2000)
 end)
